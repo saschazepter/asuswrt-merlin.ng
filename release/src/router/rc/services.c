@@ -2908,7 +2908,7 @@ char* _add_ip6_lansdnaddr()
 		p = (char*)ipv6_router_address(NULL);
 #endif
 		if (*p) {
-			snprintf(ip, sizeof(ip), "%s/%d", p, v6_prefix_length);
+			snprintf(ip, sizeof(ip), "%s/%d", p, (v6_prefix_length > 64 ? v6_prefix_length : 64));
 			eval("ip", "-6", "addr", "flush", "dev", lan_ifname, "scope", "global");
 			eval("ip", "-6", "addr", "add", ip, "dev", lan_ifname);
 			if (!nvram_match(ipv6_nvname_by_unit("ipv6_rtr_addr", wan6_unit), (char*)p))
