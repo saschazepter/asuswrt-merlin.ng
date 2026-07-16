@@ -1,6 +1,12 @@
 Asuswrt-Merlin 3006.xxx Changelog
 =================================
 
+3006.102.8_2 (xx-xxx-2026)
+  - UPDATED: dropbear to 2026.92.
+  - UPDATED: miniupnpd to 2.3.10-g91eeeae.
+  - FIXED: IPSEC server failing to start.
+
+
 3006.102.8 (8-July-2026)
   - NOTE: There has been important changes to OpenVPN, some
           necessary with the update to OpenVPN 2.7.  Make
