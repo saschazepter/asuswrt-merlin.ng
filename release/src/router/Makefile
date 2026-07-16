@@ -8038,6 +8038,20 @@ strongswan/Makefile: strongswan/configure
 strongswan: openssl strongswan/Makefile
 	@$(SEP)
 	$(MAKE) -j 8 -C strongswan
+ifneq (,$(filter $(ASUSWRT_BRCM_SDK_VERSION),WIFI7_SDK_20250506 WIFI8_SDK_20251126))
+	@-patchelf --force-rpath --set-rpath /usr/lib/ipsec strongswan/src/libipsec/.libs/libipsec.so
+	@-sed -i '/relink_command/d' strongswan/src/libipsec/libipsec.la
+	@-patchelf --force-rpath --set-rpath /usr/lib/ipsec strongswan/src/libtls/.libs/libtls.so
+	@-sed -i '/relink_command/d' strongswan/src/libtls/libtls.la
+	@-patchelf --force-rpath --set-rpath /usr/lib/ipsec strongswan/src/libcharon/.libs/libcharon.so
+	@-sed -i '/relink_command/d' strongswan/src/libcharon/libcharon.la
+	@-patchelf --force-rpath --set-rpath /usr/lib/ipsec strongswan/src/libcharon/plugins/vici/.libs/libvici.so
+	@-sed -i '/relink_command/d' strongswan/src/libcharon/plugins/vici/libvici.la
+	@-patchelf --force-rpath --set-rpath /usr/lib/ipsec strongswan/src/libcharon/plugins/eap_tls/.libs/libstrongswan-eap-tls.so
+	@-sed -i '/relink_command/d' strongswan/src/libcharon/plugins/eap_tls/libstrongswan-eap-tls.la
+	@-patchelf --force-rpath --set-rpath /usr/lib/ipsec strongswan/src/libcharon/plugins/eap_peap/.libs/libstrongswan-eap-peap.so
+	@-sed -i '/relink_command/d' strongswan/src/libcharon/plugins/eap_peap/libstrongswan-eap-peap.la
+endif
 
 strongswan-install: strongswan
 	mkdir -p $(INSTALLDIR)/strongswan/
